@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,10 @@ public class TaskListController {
 	public TaskListDto updateTaskList(@PathVariable UUID id, @RequestBody TaskListDto newtaskListDto){
 		TaskList updatedTaskList = taskListService.updateTaskList(id, taskListMapper.fromDto(newtaskListDto));
 		return taskListMapper.toDto(updatedTaskList);
+	}
+	@DeleteMapping("/{id}")
+	public void deleteTaskList(@PathVariable UUID id) {
+		taskListService.deleteTaskList(id);
 	}
 	
 }

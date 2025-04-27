@@ -69,4 +69,9 @@ public class TaskListServiceImpl implements TaskListService{
 		return taskListReopsitory.save(existingTaskList);
 	}
 
+	@Override
+	public void deleteTaskList(UUID id) {
+		taskListReopsitory.deleteById(id);
+	}
+
 }
