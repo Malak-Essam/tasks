@@ -12,6 +12,8 @@ import com.malak.tasks.domain.entities.TaskList;
 import com.malak.tasks.repositories.TaskListReopsitory;
 import com.malak.tasks.services.TaskListService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class TaskListServiceImpl implements TaskListService{
 	
@@ -51,7 +53,8 @@ public class TaskListServiceImpl implements TaskListService{
 	public Optional<TaskList> getTaskList(UUID taskListId) {
 		return taskListReopsitory.findById(taskListId);
 	}
-
+	
+	@Transactional
 	@Override
 	public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
 		if(null == taskList.getId()) {
@@ -68,7 +71,7 @@ public class TaskListServiceImpl implements TaskListService{
 		
 		return taskListReopsitory.save(existingTaskList);
 	}
-
+	@Transactional
 	@Override
 	public void deleteTaskList(UUID taskListId) {
 		taskListReopsitory.deleteById(taskListId);

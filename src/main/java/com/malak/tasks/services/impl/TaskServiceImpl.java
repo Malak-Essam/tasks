@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
 		return taskRepository.findByTaskListId(taskListId);
 	}
 
-
+	
 	@Override
 	public Task createTask(UUID taskListId, Task task) {
 		if(task.getId() != null) {
@@ -73,7 +73,7 @@ public class TaskServiceImpl implements TaskService {
 		return taskRepository.findByTaskListIdAndId(taskListId, taskId);
 	}
 
-
+	@Transactional
 	@Override
 	public Task updateTask(UUID taskListId, Task task, UUID taskId) {
 		if(task.getId() == null) {
