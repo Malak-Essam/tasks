@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Remote version of .gitignore (added by GitHub)
+# This includes the 'bin' folder and some other settings
+/target/
+/bin/
+/.settings/
+/.project
+.classpath
+*.log
