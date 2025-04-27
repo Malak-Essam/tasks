@@ -38,5 +38,10 @@ public class TasksController {
 		Task task = taskService.createTask(taskListId, taskMapper.fromDto(taskDto));
 		return taskMapper.toDto(task);
 	}
+	@GetMapping("/{task_id}")
+	public TaskDto getTask(@PathVariable("task_list_id") UUID taskListId,
+			@PathVariable("task_id") UUID taskId) {
+		return taskService.getTask(taskListId, taskId).map(taskMapper::toDto).orElse(null);
+	}
 	
 }
