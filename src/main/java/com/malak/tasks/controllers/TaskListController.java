@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,12 @@ public class TaskListController {
 	public Optional<TaskListDto> getTaskList(@PathVariable UUID id){
 		Optional<TaskList> taskListOptional = taskListService.getTaskList(id);
 		return taskListOptional.map(taskListMapper::toDto);
+	}
+		
+	@PutMapping("/{id}")
+	public TaskListDto updateTaskList(@PathVariable UUID id, @RequestBody TaskListDto newtaskListDto){
+		TaskList updatedTaskList = taskListService.updateTaskList(id, taskListMapper.fromDto(newtaskListDto));
+		return taskListMapper.toDto(updatedTaskList);
 	}
 	
 }
