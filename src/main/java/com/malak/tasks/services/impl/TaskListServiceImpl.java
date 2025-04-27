@@ -48,19 +48,19 @@ public class TaskListServiceImpl implements TaskListService{
 	}
 
 	@Override
-	public Optional<TaskList> getTaskList(UUID id) {
-		return taskListReopsitory.findById(id);
+	public Optional<TaskList> getTaskList(UUID taskListId) {
+		return taskListReopsitory.findById(taskListId);
 	}
 
 	@Override
-	public TaskList updateTaskList(UUID id, TaskList taskList) {
+	public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
 		if(null == taskList.getId()) {
 			throw new IllegalArgumentException("Task list must have an id");
 		}
-		if(!Objects.equals(id, taskList.getId() )) {
+		if(!Objects.equals(taskListId, taskList.getId() )) {
 			throw new IllegalArgumentException("Attempting to change task id is not permitted");
 		}
-		TaskList existingTaskList = taskListReopsitory.findById(id).orElseThrow(() -> 
+		TaskList existingTaskList = taskListReopsitory.findById(taskListId).orElseThrow(() -> 
 			new IllegalArgumentException("Task list not found"));
 		existingTaskList.setTitle(taskList.getTitle());
 		existingTaskList.setDescription(taskList.getDescription());
@@ -70,8 +70,8 @@ public class TaskListServiceImpl implements TaskListService{
 	}
 
 	@Override
-	public void deleteTaskList(UUID id) {
-		taskListReopsitory.deleteById(id);
+	public void deleteTaskList(UUID taskListId) {
+		taskListReopsitory.deleteById(taskListId);
 	}
 
 }

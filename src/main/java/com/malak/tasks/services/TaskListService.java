@@ -9,7 +9,7 @@ import com.malak.tasks.domain.entities.TaskList;
 public interface TaskListService {
 	List<TaskList> listTaskLists();
 	TaskList createTaskList(TaskList taskList);
-	Optional<TaskList> getTaskList(UUID id);
-	TaskList updateTaskList(UUID id, TaskList taskList);
-	void deleteTaskList(UUID id);
+	Optional<TaskList> getTaskList(UUID taskListId);
+	TaskList updateTaskList(UUID taskListId, TaskList taskList);
+	void deleteTaskList(UUID taskListId);
 }
