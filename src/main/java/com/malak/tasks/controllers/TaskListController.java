@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.malak.tasks.domain.dto.TaskListDto;
 import com.malak.tasks.domain.entities.TaskList;
 import com.malak.tasks.mappers.TaskListMapper;
-import com.malak.tasks.repositories.TaskListReopsitory;
 import com.malak.tasks.services.TaskListService;
 
 @RestController
