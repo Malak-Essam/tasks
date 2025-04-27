@@ -2,6 +2,7 @@ package com.malak.tasks.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,6 +15,8 @@ import com.malak.tasks.domain.entities.TaskStatus;
 import com.malak.tasks.repositories.TaskListReopsitory;
 import com.malak.tasks.repositories.TaskRepository;
 import com.malak.tasks.services.TaskService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -68,6 +71,40 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Optional<Task> getTask(UUID taskListId, UUID taskId) {
 		return taskRepository.findByTaskListIdAndId(taskListId, taskId);
+	}
+
+
+	@Override
+	public Task updateTask(UUID taskListId, Task task, UUID taskId) {
+		if(task.getId() == null) {
+			throw new IllegalArgumentException("task id can't be null");
+		}
+		if(!Objects.equals(task.getId(), taskId)) {
+			throw new IllegalArgumentException("Attempting to change task id is not permitted");
+		}
+		if(task.getStatus() == null) {
+			throw new IllegalArgumentException("Status can not be null");
+		}
+		if(task.getPriority() == null) {
+			throw new IllegalArgumentException("Priority can not be null");
+		}
+		Task existingTask = taskRepository.findByTaskListIdAndId(taskListId, taskId).orElseThrow(() -> 
+			new IllegalArgumentException("Task list not found"));
+		
+		existingTask.setTitle(task.getTitle());
+		existingTask.setDescription(task.getDescription());
+		existingTask.setDueDate(task.getDueDate());
+		existingTask.setPriority(task.getPriority());
+		existingTask.setStatus(task.getStatus());
+		existingTask.setUpdated(LocalDateTime.now());
+		
+		return taskRepository.save(existingTask);
+	}
+
+	@Transactional
+	@Override
+	public void deleteTask(UUID taskListId, UUID taskId) {
+		taskRepository.deleteByTaskListIdAndId(taskListId, taskId);
 	}
 
 }
