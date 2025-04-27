@@ -2,6 +2,8 @@ package com.malak.tasks.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,11 @@ public class TaskListServiceImpl implements TaskListService{
 						now
 					)
 				);
+	}
+
+	@Override
+	public Optional<TaskList> getTaskList(UUID id) {
+		return taskListReopsitory.findById(id);
 	}
 
 }
