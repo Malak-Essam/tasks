@@ -17,7 +17,50 @@ The application allows users to:
 - **Transactional Operations**: Service methods that involve multiple database interactions are wrapped with `@Transactional` to ensure atomicity and data integrity.
 - **Global Exception Handling**: A `@ControllerAdvice` global exception handler is implemented to catch and manage exceptions cleanly. Currently, it mainly handles `IllegalArgumentException`, which is the most common exception type across the application.
 
----
+## How to Run (the application frontend and backend)
+1. Clone the repository. ```git clone git@github.com:Malak-Essam/tasks.git```, then run ```cd tasks```
+
+2. Start the PostgreSQL container using Docker. 
+   * Start Docker
+   * run ```docker-compose up -d``` to start container with database
+4. Configure the application database
+```
+By default, if you run docker-compose up without changing anything, the PostgreSQL database will be created with:
+
+Database Name: postgres
+
+Username: postgres
+
+Password: changemeinprod!
+
+👉 You do not need to manually configure anything — the application will connect automatically using these default values.
+
+If you want to customize the database name, username, or password:
+
+Update the Docker configuration:
+Modify the environment variables inside the docker-compose.yml file.
+
+Update the Spring Boot configuration:
+Modify the database connection settings inside src/main/resources/application.properties.
+```
+5. Run the Spring Boot application (TaskApplication.java). 
+   * to build the application run ```mvn clean install```
+   * to start the application run ```mvn spring-boot:run```
+  
+7. Frontend React app will interact with the backend through exposed REST APIs. 
+   * download the react front application from ```https://drive.google.com/file/d/1fwr6PpJliMdA6Y7ZMExkd71T3HxUgopV/view?usp=sharing```
+   * to install all the packages, run ```npm install```
+   * to run the application run ```npm run dev```
+   * Go to the application link that will appear and you will see the application start and work correctly.
+
+## 📖 API Documentation (Swagger UI)
+
+The backend API is fully documented using **Swagger UI** with **SpringDoc OpenAPI**.
+
+After running the backend, you can access the live API documentation at:
+```
+http://localhost:8080/swagger-ui.html
+```
 
 ## 🛠️ Tech Stack
 
@@ -52,9 +95,6 @@ services:
       - "5432:5432"
 
 ```
-```bash
-docker-compose up -d
-```
 
 ## Project Structure (Backend)
 ```
@@ -67,17 +107,7 @@ com.malak.tasks
 ├── repositories       # JPA repositories
 ├── services           # Business logic
 ```
-## How to Run (Backend)
-1. Clone the repository.
-
-2. Start the PostgreSQL container using Docker.
-
-3. Configure application.properties (or application.yml) to connect to your database.
-
-4. Run the Spring Boot application (TaskApplication.java).
-
-5. Frontend React app will interact with the backend through exposed REST APIs.
-
+   
 ## 📬 API Overview (Backend Endpoints)
 * POST /api/task-lists → Create a new task list
 * GET /api/task-lists/{task_list_id} -> get a single task list
@@ -90,3 +120,4 @@ com.malak.tasks
 * PUT /api/task-lists/{task_list_id}/tasks/{task_id} -> update task from task list tasks
 * POST /api/task-lists/{task_list_id}/tasks -> create a task add it to task list tasks
 * DELETE /api/task-lists/{task_list_id}/tasks/{task_id} -> delete a task from task list
+
