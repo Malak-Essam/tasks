@@ -17,7 +17,7 @@ public class TaskRepositoryIntegrationTest {
 	private TaskRepository underTest;
 	
 	@Autowired
-	private TaskListReopsitory taskListRepository;
+	private TaskListRepository taskListRepository;
 	
 	@Test
 	void findByTaskListId_whenTaskListExist_returnListOfTasks() {

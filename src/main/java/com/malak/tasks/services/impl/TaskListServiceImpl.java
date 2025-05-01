@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.malak.tasks.domain.entities.TaskList;
-import com.malak.tasks.repositories.TaskListReopsitory;
+import com.malak.tasks.repositories.TaskListRepository;
 import com.malak.tasks.services.TaskListService;
 
 import jakarta.transaction.Transactional;
@@ -17,15 +17,15 @@ import jakarta.transaction.Transactional;
 @Service
 public class TaskListServiceImpl implements TaskListService{
 	
-	private final TaskListReopsitory taskListReopsitory;
+	private final TaskListRepository TaskListRepository;
 	
-	public TaskListServiceImpl(TaskListReopsitory taskListReopsitory) {
-		this.taskListReopsitory = taskListReopsitory;
+	public TaskListServiceImpl(TaskListRepository taskListRepository) {
+		this.TaskListRepository = taskListRepository;
 	}
 	
 	@Override
 	public List<TaskList> listTaskLists() {
-		return taskListReopsitory.findAll();
+		return TaskListRepository.findAll();
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class TaskListServiceImpl implements TaskListService{
 			throw new IllegalArgumentException("Task list title must be present!");
 		}
 		LocalDateTime now = LocalDateTime.now();
-		return taskListReopsitory.save(
+		return TaskListRepository.save(
 				new TaskList(
 						null,
 						taskList.getTitle(), 
@@ -51,7 +51,7 @@ public class TaskListServiceImpl implements TaskListService{
 
 	@Override
 	public Optional<TaskList> getTaskList(UUID taskListId) {
-		return taskListReopsitory.findById(taskListId);
+		return TaskListRepository.findById(taskListId);
 	}
 	
 	@Transactional
@@ -63,18 +63,18 @@ public class TaskListServiceImpl implements TaskListService{
 		if(!Objects.equals(taskListId, taskList.getId() )) {
 			throw new IllegalArgumentException("Attempting to change task id is not permitted");
 		}
-		TaskList existingTaskList = taskListReopsitory.findById(taskListId).orElseThrow(() -> 
+		TaskList existingTaskList = TaskListRepository.findById(taskListId).orElseThrow(() -> 
 			new IllegalArgumentException("Task list not found"));
 		existingTaskList.setTitle(taskList.getTitle());
 		existingTaskList.setDescription(taskList.getDescription());
 		existingTaskList.setUpdated(LocalDateTime.now());
 		
-		return taskListReopsitory.save(existingTaskList);
+		return TaskListRepository.save(existingTaskList);
 	}
 	@Transactional
 	@Override
 	public void deleteTaskList(UUID taskListId) {
-		taskListReopsitory.deleteById(taskListId);
+		TaskListRepository.deleteById(taskListId);
 	}
 
 }

@@ -12,7 +12,7 @@ import com.malak.tasks.domain.entities.Task;
 import com.malak.tasks.domain.entities.TaskList;
 import com.malak.tasks.domain.entities.TaskPriority;
 import com.malak.tasks.domain.entities.TaskStatus;
-import com.malak.tasks.repositories.TaskListReopsitory;
+import com.malak.tasks.repositories.TaskListRepository;
 import com.malak.tasks.repositories.TaskRepository;
 import com.malak.tasks.services.TaskService;
 
@@ -21,10 +21,10 @@ import jakarta.transaction.Transactional;
 @Service
 public class TaskServiceImpl implements TaskService {
 	private final TaskRepository taskRepository;
-	private final TaskListReopsitory taskListRepository;
+	private final TaskListRepository taskListRepository;
 	
 	public TaskServiceImpl(TaskRepository taskRepository,
-			TaskListReopsitory taskListRepository) {
+			TaskListRepository taskListRepository) {
 		this.taskRepository = taskRepository;
 		this.taskListRepository = taskListRepository;
 	}
