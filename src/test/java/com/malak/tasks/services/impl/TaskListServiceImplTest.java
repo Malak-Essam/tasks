@@ -3,7 +3,9 @@ package com.malak.tasks.services.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -69,6 +71,23 @@ public class TaskListServiceImplTest {
 	        .isInstanceOf(IllegalArgumentException.class)
 	        .hasMessage("Task list title must be present!");
 	}
+	
+	@Test
+	void shouldReturnTaskListById() {
+	    // given
+	    UUID id = UUID.randomUUID();
+	    TaskList taskList = TestDataFactory.createTaskList();
+	    when(taskListRepository.findById(id)).thenReturn(Optional.of(taskList));
+
+	    // when
+	    Optional<TaskList> result = underTest.getTaskList(id);
+
+	    // then
+	    assertThat(result).isPresent();
+	    assertThat(result.get()).isEqualTo(taskList);
+	    verify(taskListRepository).findById(id);
+	}
+
 	
 	
 }
